@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 var faker = require('faker');
 
 //connect mongoose to localhost
-mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true, useUnifiedTopology: true });
 
 //define reviewSchema values
 const reviewSchema = new mongoose.Schema({
