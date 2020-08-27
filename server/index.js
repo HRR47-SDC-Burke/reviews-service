@@ -30,7 +30,7 @@ app.post('/api/reviews', (req, res) => {
   let newReview = new Review(req.body);
   newReview.save((err, review) => {
     if (err) {
-      res.send(500).end();
+      res.status(500).end('An Error Occurred');
     } else {
       res.status(200).end('Review Sent');
     }
@@ -38,45 +38,37 @@ app.post('/api/reviews', (req, res) => {
 });
 
 app.get('/api/reviews', (req, res) => {
-  let userName = req.body.user;
-  let stayDate = req.body.date;
-  let location = req.body.locationID;
-  Review.findOne({
-    user: userName,
-    date: stayDate,
-    locationID: location
-  }, (err, review) => {
+  let { user, date, locationID } = req.body;
+  Review.findOne({ user, date, locationID }, (err, review) => {
     if (err) {
-      res.send('An Error Occurred');
+      res.status(404).end('An Error Occurred');
     } else {
-      res.send(review);
+      res.status(200).send(review);
     }
   });
 });
 
 app.put('/api/reviews/:id', (req, res) => {
+  let { user, date } = req.body;
   let update = req.body;
-  let userName = req.body.user;
-  let stayDate = req.body.date;
-  let location = req.params.id;
-  Review.update({ user: userName, date: stayDate, locationID: location }, { $set: update }, (err, review) => {
+  let locationID = req.params.id;
+  Review.update({ user, date, locationID }, { $set: update }, (err, review) => {
     if (err || review.nModified === 0) {
-      res.send('An Error Occurred.');
+      res.status(500).end('An Error Occurred.');
     } else {
-      res.send('Review Updated');
+      res.status(200).end('Review Updated');
     }
   });
 });
 
 app.delete('/api/reviews/:id', (req, res) => {
-  let userName = req.body.user;
-  let stayDate = req.body.date;
-  let location = req.params.id;
-  Review.remove({ user: userName, date: stayDate, locationID: location }, (err, review) => {
+  let { user, date } = req.body;
+  let locationID = req.params.id;
+  Review.remove({ user, date, locationID }, (err, review) => {
     if (err || review.deletedCount === 0) {
-      res.send('An Error Occurred.');
+      res.status(500).end('An Error Occurred.');
     } else {
-      res.send('Review Deleted');
+      res.status(200).end('Review Deleted');
     }
   });
 });
