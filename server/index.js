@@ -26,40 +26,60 @@ app.get('/api/individual_reviews/:id', (req, res) => {
   .sort({ date: -1 });
 });
 
-// {
-//   "_id" : ObjectId("5f46a7444b86cd31a9aea7de"),
-  // "imageURL" : "https://airbnbprojectimages.s3.us-east-2.amazonaws.com/33.jpg",
-  // "user" : "Loraine",
-  // "date" : ISODate("2018-03-01T05:00:00Z"),
-  // "locationID" : 3,  // 1-3
-  // "reviewTxt" : "Distinctio necessitatibus aut quo ipsam dolor. Et tempore temporibus nulla. Repellendus laborum ut nesciunt ex accusamus voluptas quasi ut et. Consectetur a sunt corrupti accusantium vitae. Unde eum ipsam nobis assumenda laudantium.", //
-  // "cleanliness" : 0, //0-5
-  // "communication" : 0, //0-5
-  // "checkin" : 1, //0-5
-  // "accuracy" : 1, //0-5
-  // "location" : 2, //0-5
-  // "value" : 3, //0-5
-//   "__v" : 0
-// }
-//NEW CRUD ROUTES
-
-app.post('/api/newReview/', (req, res) => {
+app.post('/api/reviews', (req, res) => {
   let newReview = new Review(req.body);
   newReview.save((err, review) => {
     if (err) {
       res.send(500).end();
     } else {
-      console.log(review);
-      res.status(200).end();
+      res.status(200).end('Review Sent');
     }
   });
 });
 
-// app.get();
+app.get('/api/reviews', (req, res) => {
+  let userName = req.body.user;
+  let stayDate = req.body.date;
+  let location = req.body.locationID;
+  Review.findOne({
+    user: userName,
+    date: stayDate,
+    locationID: location
+  }, (err, review) => {
+    if (err) {
+      res.send('An Error Occurred');
+    } else {
+      res.send(review);
+    }
+  });
+});
 
-// app.put();
+app.put('/api/reviews/:id', (req, res) => {
+  let update = req.body;
+  let userName = req.body.user;
+  let stayDate = req.body.date;
+  let location = req.params.id;
+  Review.update({ user: userName, date: stayDate, locationID: location }, { $set: update }, (err, review) => {
+    if (err || review.nModified === 0) {
+      res.send('An Error Occurred.');
+    } else {
+      res.send('Review Updated');
+    }
+  });
+});
 
-// app.delete();
+app.delete('/api/reviews/:id', (req, res) => {
+  let userName = req.body.user;
+  let stayDate = req.body.date;
+  let location = req.params.id;
+  Review.remove({ user: userName, date: stayDate, locationID: location }, (err, review) => {
+    if (err || review.deletedCount === 0) {
+      res.send('An Error Occurred.');
+    } else {
+      res.send('Review Deleted');
+    }
+  });
+});
 
 
 app.listen(port, () => {
