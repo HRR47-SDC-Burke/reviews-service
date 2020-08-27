@@ -15,7 +15,7 @@
 1. [Development](#development)
 
 ## Usage
- 
+
 Choose between 3 id locations to review mock data highligting the 6 most recent reviews and displaying 6 average category scores by visiting http://localhost:3000/:id. Click on the button at the bottom of the page to view all user reviews.
 
 ## Requirements
@@ -50,5 +50,31 @@ npm run build
 npm start
 ```
 
-Now if you visit http://localhost:3000/:id you will see a module rendering based on the id number in the url.
+Now if you visit http://localhost:3003/:id you will see a module rendering based on the id number in the url.
 
+### CRUD Routes
+
+GET:
+
+```sh
+/api/reviews
+```
+> Gets a specific user review for a property.
+POST:
+
+```sh
+/api/reviews
+```
+> Creates a new review for a property.
+PUT:
+
+```sh
+/api/reviews/:id
+```
+> Updates a user review of a property.
+DELETE:
+
+```sh
+/api/reviews/:id
+```
+> Deletes a user review for a property
