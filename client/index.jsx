@@ -121,13 +121,13 @@ class Reviews extends React.Component {
   render() {
     return (
       <div style={{
-        fontFamily: "Roboto"
+        fontFamily: 'Roboto'
       }}>
-        <div className="review-header">
+        <div className='review-header'>
           <TotalReviews>
             <div style={{
-              display: "inline-block",
-              color: "red"}}>★</div>{this.state.totalAvg} ({this.state.totalNumber} reviews)
+              display: 'inline-block',
+              color: 'red'}}>★</div>{this.state.totalAvg} ({this.state.totalNumber} reviews)
           </TotalReviews>
         </div>
         <NormalView>

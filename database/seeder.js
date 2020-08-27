@@ -22,12 +22,12 @@ for (var i = 0; i < 101; i++) {
     location: faker.random.number({ 'min': 0, 'max': 5 }),
     value: faker.random.number({ 'min': 0, 'max': 5 })
   });
-//save random review data to database or log error
+  //save random review data to database or log error
   review.save((err, review) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("saved to database")
+      console.log('saved to database');
     }
   });
 }
