@@ -83,7 +83,6 @@ class Reviews extends React.Component {
   fetchListingInfo(urlID) {
     //get review rating categories
     $.ajax({
-      // url: `http://18.217.248.48:3000/api/overall_reviews/${urlID}`,
       url: `/api/overall_reviews/${urlID}`,
       method: 'GET',
       success: (reviews) => {
@@ -96,7 +95,6 @@ class Reviews extends React.Component {
     });
     //get individual reviews
     $.ajax({
-      // url: `http://18.217.248.48:3000/api/individual_reviews/${urlID}`,
       url: `/api/individual_reviews/${urlID}`,
       method: 'GET',
       success: (reviews) => {

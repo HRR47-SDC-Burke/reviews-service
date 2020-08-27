@@ -21,5 +21,6 @@ const reviewSchema = new mongoose.Schema({
 });
 //create model for schema inputs
 const Review = mongoose.model('Review', reviewSchema);
+// const dropDatabase = () => mongoose.connection.dropDatabase();
 
 module.exports = Review;

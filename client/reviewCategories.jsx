@@ -56,8 +56,8 @@ let ReviewCategory = (props) => (
     <CategoryName>{props.category}</CategoryName>
     <Score>
       <RatingsBar>
-        <RatingBucket src={'https://airbnbprojectimages.s3.us-east-2.amazonaws.com/Ratings+Bar/ratingscontainer.png'}></RatingBucket>
-        <RatingFiller rating={props.rating} src={'https://airbnbprojectimages.s3.us-east-2.amazonaws.com/Ratings+Bar/ratingsbar.png'} ></RatingFiller>
+        <RatingBucket src={'https://sdc-user-images.s3.us-east-2.amazonaws.com/ratingscontainer.png'}></RatingBucket>
+        <RatingFiller rating={props.rating} src={'https://sdc-user-images.s3.us-east-2.amazonaws.com/ratingsbar.png'} ></RatingFiller>
       </RatingsBar>
       <Rating>{props.rating}</Rating>
     </Score>
