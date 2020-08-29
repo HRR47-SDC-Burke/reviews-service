@@ -24,3 +24,9 @@ coverage
 build/
 dist/
 public/bundle.js
+
+#DATA
+/database/data.csv
+
+#NOTES
+/database/cassandraNOTES.js

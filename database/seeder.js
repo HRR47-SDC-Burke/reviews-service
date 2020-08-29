@@ -2,15 +2,19 @@ const Review = require('./connection.js');
 const mongoose = require('mongoose');
 var faker = require('faker');
 
+mongoose.connection.dropDatabase();
+
 //seed database for 100 random entries
+var reviewCount = 1;
+
 for (var i = 0; i < 101; i++) {
-  let randomImgNum = faker.random.number({ 'min': 1, 'max': 36 });
+  let randomImgNum = faker.random.number({ 'min': 1, 'max': 1000 });
   let randomYear = faker.random.number({ 'min': 2013, 'max': 2020 });
   let randomMonth = faker.date.month();
   let randomLocation = faker.random.number({ 'min': 1, 'max': 3});
   //generate random review data
   let review = new Review({
-    imageURL: `https://airbnbprojectimages.s3.us-east-2.amazonaws.com/${randomImgNum}.jpg`,
+    imageURL: `https://sdc-user-images.s3.us-east-2.amazonaws.com/user-pic${randomImgNum}.jpg`,
     user: faker.name.firstName(),
     date: randomMonth + ' ' + randomYear,
     locationID: randomLocation,
@@ -27,7 +31,11 @@ for (var i = 0; i < 101; i++) {
     if (err) {
       console.log(err);
     } else {
-      console.log('saved to database');
+      console.log(`review ${reviewCount} saved to database`);
+      reviewCount += 1;
+      if (i === 101) {
+        setTimeout(() => process.exit(), 10);
+      }
     }
   });
 }
