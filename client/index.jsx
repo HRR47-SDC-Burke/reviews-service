@@ -86,6 +86,7 @@ class Reviews extends React.Component {
       url: `/api/overall_reviews/${urlID}`,
       method: 'GET',
       success: (reviews) => {
+        console.log(reviews);
         this.setState({
           reviews: reviews[0],
           totalNumber: reviews[1],
@@ -98,6 +99,7 @@ class Reviews extends React.Component {
       url: `/api/individual_reviews/${urlID}`,
       method: 'GET',
       success: (reviews) => {
+        console.log(reviews);
         this.setState({
           userReviews: reviews
         });

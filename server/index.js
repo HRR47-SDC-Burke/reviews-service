@@ -4,6 +4,7 @@ const port = 3003;
 const Review = require('../database/connection.js');
 const overallReviews = require('./overallReviews.js');
 const cors = require('cors');
+const dbCass = require('../database/cassandra/index.js');
 
 
 app.use(cors());
@@ -26,6 +27,7 @@ app.get('/api/individual_reviews/:id', (req, res) => {
     .sort({ date: -1 });
 });
 
+//NEW CRUD PATHS
 app.get('/api/reviews', (req, res) => {
   let { user, date, locationID } = req.body;
   Review.findOne({ user, date, locationID }, (err, review) => {
@@ -69,6 +71,27 @@ app.delete('/api/reviews/:id', (req, res) => {
       res.status(500).end('An Error Occurred.');
     } else {
       res.status(200).end('Review Deleted');
+    }
+  });
+});
+
+//CASSANDRA API PATHS
+app.get('/api/cass/:id', (req, res) => {
+  let id = req.params.id;
+  let allReviews = [];
+  dbCass.retrieveReviews(id, (err, reviews) => {
+    if (err) {
+      res.status(404).end('An Error Occurred');
+    } else {
+      reviews.forEach((review) => {
+        allReviews.push({
+          imageURL: review.imageurl,
+          user: review.user,
+          date: review.date,
+          reviewTxt: review.reviewtxt
+        });
+      });
+      res.status(200).send(allReviews);
     }
   });
 });

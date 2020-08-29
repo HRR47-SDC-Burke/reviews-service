@@ -33,7 +33,7 @@ for (var i = 0; i < 101; i++) {
     } else {
       console.log(`review ${reviewCount} saved to database`);
       reviewCount += 1;
-      if (i === 101) {
+      if (reviewCount === 101) {
         setTimeout(() => process.exit(), 10);
       }
     }
