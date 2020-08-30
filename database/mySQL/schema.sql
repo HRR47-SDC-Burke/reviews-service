@@ -5,6 +5,7 @@ CREATE DATABASE reviews;
 USE reviews;
 
 CREATE TABLE properties (
+  id INT NOT NULL AUTO_INCREMENT,
   imageurl int NOT NULL,
   user varchar(20) NOT NULL,
   date varchar(20) NOT NULL,
@@ -16,6 +17,6 @@ CREATE TABLE properties (
   accuracy int NOT NULL,
   location int NOT NULL,
   value int NOT NULL,
-  PRIMARY KEY (locationid)
+  PRIMARY KEY (ID)
 );
 
