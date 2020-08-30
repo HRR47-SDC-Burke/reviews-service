@@ -13,19 +13,19 @@ app.use(express.json());
 app.use('/:id', express.static(__dirname + '/../public'));
 
 //get review categories
-app.use('/api/overall_reviews', overallReviews);
+// app.use('/api/overall_reviews', overallReviews);
 
 //get individual reviews
-app.get('/api/individual_reviews/:id', (req, res) => {
-  Review.find({}, { user: 1, imageURL: 1, date: 1, reviewTxt: 1, _id: 0}, (err, results) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.send(results);
-    }
-  }).where('locationID').equals(req.params.id)
-    .sort({ date: -1 });
-});
+// app.get('/api/individual_reviews/:id', (req, res) => {
+//   Review.find({}, { user: 1, imageURL: 1, date: 1, reviewTxt: 1, _id: 0}, (err, results) => {
+//     if (err) {
+//       res.status(500).send(err);
+//     } else {
+//       res.send(results);
+//     }
+//   }).where('locationID').equals(req.params.id)
+//     .sort({ date: -1 });
+// });
 
 //NEW CRUD PATHS
 app.get('/api/reviews', (req, res) => {
@@ -76,7 +76,7 @@ app.delete('/api/reviews/:id', (req, res) => {
 });
 
 //CASSANDRA API PATHS
-app.get('/api/cass/:id', (req, res) => {
+app.get('/api/individual_reviews/:id', (req, res) => {
   let id = req.params.id;
   let allReviews = [];
   dbCass.retrieveReviews(id, (err, reviews) => {
@@ -92,6 +92,17 @@ app.get('/api/cass/:id', (req, res) => {
         });
       });
       res.status(200).send(allReviews);
+    }
+  });
+});
+
+app.get('/api/overall_reviews/:id', (req, res) => {
+  let id = req.params.id;
+  dbCass.retrieveRatings(id, (err, ratings) => {
+    if (err) {
+      res.status(404).end('An Error Occurred');
+    } else {
+      res.status(200).send(ratings);
     }
   });
 });

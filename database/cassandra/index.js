@@ -6,17 +6,6 @@ const client = new cassandra.Client({
   keyspace: 'reviews',
 });
 
-//******INTIALIZE DATABASE******//
-
-client.execute('CREATE TABLE IF NOT EXISTS test(imageURL int, user text, date text, locationID int, reviewTxt text, cleanliness int, communication int, checkin int, accuracy int, location int, value int, PRIMARY KEY((locationID), user, date))', (err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('Table created!');
-    client.shutdown();
-  }
-});
-
 //retrieve all reviews for properties
 const retrieveReviews = (locationID, callback) => {
 
@@ -35,4 +24,45 @@ const retrieveReviews = (locationID, callback) => {
   });
 };
 
+const retrieveRatings = (locationID, callback) => {
+
+  const getAverage = (reviews, cat) => {
+    let total = 0;
+    reviews.forEach((review) => {
+      total += review[cat];
+    });
+    return Math.floor(total / reviews.length * 10) / 10;
+  };
+  const query = 'SELECT * FROM properties WHERE locationid = ?';
+
+  client.execute(query, [ locationID ], { prepare: true }).then(results => {
+
+    let avgAccuracy = getAverage(results.rows, 'accuracy');
+    let avgCheckin = getAverage(results.rows, 'checkin');
+    let avgCleanliness = getAverage(results.rows, 'cleanliness');
+    let avgCommunication = getAverage(results.rows, 'communication');
+    let avgLocation = getAverage(results.rows, 'location');
+    let avgValue = getAverage(results.rows, 'value');
+
+    let averageRatings = {
+      'Accuracy': avgAccuracy,
+      'Check-in': avgCheckin,
+      'Cleanliness': avgCleanliness,
+      'Communication': avgCommunication,
+      'Location': avgLocation,
+      'Value': avgValue,
+    };
+
+    let overallRating = Math.floor((avgAccuracy + avgCheckin + avgCleanliness +
+      avgCommunication + avgLocation + avgValue) / 6 * 100) / 100;
+
+    return [averageRatings, results.rows.length, overallRating];
+  }).then((ratings) => {
+    callback(null, ratings);
+  }).catch((err) => {
+    callback(err, null);
+  });
+};
+
 module.exports.retrieveReviews = retrieveReviews;
+module.exports.retrieveRatings = retrieveRatings;
