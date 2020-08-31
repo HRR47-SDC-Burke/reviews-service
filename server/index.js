@@ -12,22 +12,6 @@ app.use(cors());
 app.use(express.json());
 app.use('/:id', express.static(__dirname + '/../public'));
 
-//get review categories
-// app.use('/api/overall_reviews', overallReviews);
-
-//get individual reviews
-// app.get('/api/individual_reviews/:id', (req, res) => {
-//   Review.find({}, { user: 1, imageURL: 1, date: 1, reviewTxt: 1, _id: 0}, (err, results) => {
-//     if (err) {
-//       res.status(500).send(err);
-//     } else {
-//       res.send(results);
-//     }
-//   }).where('locationID').equals(req.params.id)
-//     .sort({ date: -1 });
-// });
-
-//NEW CRUD PATHS
 app.get('/api/reviews', (req, res) => {
   let { user, date, locationID } = req.body;
   Review.findOne({ user, date, locationID }, (err, review) => {
@@ -81,7 +65,7 @@ app.get('/api/individual_reviews/:id', (req, res) => {
   let allReviews = [];
   dbCass.retrieveReviews(id, (err, reviews) => {
     if (err) {
-      res.status(404).end('An Error Occurred');
+      res.status(500).end('An Error Occurred');
     } else {
       reviews.forEach((review) => {
         allReviews.push({
@@ -100,13 +84,12 @@ app.get('/api/overall_reviews/:id', (req, res) => {
   let id = req.params.id;
   dbCass.retrieveRatings(id, (err, ratings) => {
     if (err) {
-      res.status(404).end('An Error Occurred');
+      res.status(500).end('An Error Occurred');
     } else {
       res.status(200).send(ratings);
     }
   });
 });
-
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

@@ -17,11 +17,13 @@ const retrieveReviews = (locationID, callback) => {
       review.imageurl = `https://sdc-user-images.s3.us-east-2.amazonaws.com/user-pic${imageId}.jpg`;
     });
     return results;
-  }).then((reviews) => {
-    callback(null, reviews.rows);
-  }).catch((err) => {
-    callback(err, null);
-  });
+  })
+    .then((reviews) => {
+      callback(null, reviews.rows);
+    })
+    .catch((err) => {
+      callback(err, null);
+    });
 };
 
 const retrieveRatings = (locationID, callback) => {
@@ -35,33 +37,36 @@ const retrieveRatings = (locationID, callback) => {
   };
   const query = 'SELECT * FROM properties WHERE locationid = ?';
 
-  client.execute(query, [ locationID ], { prepare: true }).then(results => {
+  client.execute(query, [ locationID ], { prepare: true })
+    .then(results => {
 
-    let avgAccuracy = getAverage(results.rows, 'accuracy');
-    let avgCheckin = getAverage(results.rows, 'checkin');
-    let avgCleanliness = getAverage(results.rows, 'cleanliness');
-    let avgCommunication = getAverage(results.rows, 'communication');
-    let avgLocation = getAverage(results.rows, 'location');
-    let avgValue = getAverage(results.rows, 'value');
+      let avgAccuracy = getAverage(results.rows, 'accuracy');
+      let avgCheckin = getAverage(results.rows, 'checkin');
+      let avgCleanliness = getAverage(results.rows, 'cleanliness');
+      let avgCommunication = getAverage(results.rows, 'communication');
+      let avgLocation = getAverage(results.rows, 'location');
+      let avgValue = getAverage(results.rows, 'value');
 
-    let averageRatings = {
-      'Accuracy': avgAccuracy,
-      'Check-in': avgCheckin,
-      'Cleanliness': avgCleanliness,
-      'Communication': avgCommunication,
-      'Location': avgLocation,
-      'Value': avgValue,
-    };
+      let averageRatings = {
+        'Accuracy': avgAccuracy,
+        'Check-in': avgCheckin,
+        'Cleanliness': avgCleanliness,
+        'Communication': avgCommunication,
+        'Location': avgLocation,
+        'Value': avgValue,
+      };
 
-    let overallRating = Math.floor((avgAccuracy + avgCheckin + avgCleanliness +
-      avgCommunication + avgLocation + avgValue) / 6 * 100) / 100;
+      let overallRating = Math.floor((avgAccuracy + avgCheckin + avgCleanliness +
+        avgCommunication + avgLocation + avgValue) / 6 * 100) / 100;
 
-    return [averageRatings, results.rows.length, overallRating];
-  }).then((ratings) => {
-    callback(null, ratings);
-  }).catch((err) => {
-    callback(err, null);
-  });
+      return [averageRatings, results.rows.length, overallRating];
+    })
+    .then((ratings) => {
+      callback(null, ratings);
+    })
+    .catch((err) => {
+      callback(err, null);
+    });
 };
 
 module.exports.retrieveReviews = retrieveReviews;
