@@ -12,6 +12,7 @@
     "webpack": "webpack --config webpack.config.js --watch",
     "seed-db": "node ./database/seeder.js",
     "seed": "node ./database/dataGen.js",
+    "init-cass": "node ./database/cassandra/initialize.js",
     "test": "jest"
   },
   "dependencies": {
