@@ -17,6 +17,7 @@ CREATE TABLE properties (
   accuracy int NOT NULL,
   location int NOT NULL,
   value int NOT NULL,
-  PRIMARY KEY (ID)
+  PRIMARY KEY (ID),
+  KEY locationid (locationid);
 );
 
