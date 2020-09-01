@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Review = require('../database/connection.js');
 
-//Render overall Rating bars
+//Render overall Rating bars//LEGACY CODE
 router.get("/:id", (req, res) => {
   let objWithColumnArrays = {};
 
@@ -95,4 +95,20 @@ router.get("/:id", (req, res) => {
   .where('locationID').equals(req.params.id);
 });
 
-module.exports = router;
+//ORFER REVIEWS BY MOST RECENT
+const reviewSort = (reviews) => {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May',
+    'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  reviews.map(review => {
+    let order = Number(review.date.slice(-2)) +
+    Number(months.indexOf(review.date.slice(0, 3))) / 10;
+    review.order = order;
+    return review;
+  });
+
+  return reviews.sort((a, b) => b.order - a.order);
+};
+
+
+module.exports.router = router;
+module.exports.reviewSort = reviewSort;
