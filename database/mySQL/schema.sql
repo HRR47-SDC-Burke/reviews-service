@@ -18,6 +18,6 @@ CREATE TABLE properties (
   location int NOT NULL,
   value int NOT NULL,
   PRIMARY KEY (ID),
-  KEY locationid (locationid);
+  KEY locationid (locationid)
 );
 
