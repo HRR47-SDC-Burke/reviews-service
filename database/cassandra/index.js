@@ -9,7 +9,7 @@ const client = new cassandra.Client({
 //retrieve all reviews for properties
 const retrieveReviews = (locationID, callback) => {
 
-  const query = 'SELECT * FROM properties WHERE locationid = ?';
+  const query = 'SELECT imageurl, user, date, reviewtxt FROM properties WHERE locationid = ?';
 
   client.execute(query, [ locationID ], { prepare: true }).then(results => {
     results.rows.forEach(review => {
@@ -35,7 +35,7 @@ const retrieveRatings = (locationID, callback) => {
     });
     return Math.floor(total / reviews.length * 10) / 10;
   };
-  const query = 'SELECT * FROM properties WHERE locationid = ?';
+  const query = 'SELECT accuracy, accuracy, cleanliness, communication, location, value FROM properties WHERE locationid = ?';
 
   client.execute(query, [ locationID ], { prepare: true })
     .then(results => {

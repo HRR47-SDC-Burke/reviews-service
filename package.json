@@ -25,6 +25,7 @@
     "moment": "^2.27.0",
     "mongoose": "^5.9.27",
     "mysql": "^2.18.1",
+    "newrelic": "^6.13.0",
     "react-dom": "^16.13.1",
     "react-modal": "^3.11.2",
     "styled-components": "^5.1.1",
