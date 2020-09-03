@@ -17,7 +17,7 @@ con.connect(function(err) {
 
 const retrieveReviews = (locationID, callback) => {
 
-  const query = 'SELECT * FROM properties WHERE locationid = ?';
+  const query = 'SELECT imageurl, user, date, reviewtxt FROM properties WHERE locationid = ?';
 
   con.query(query, [ locationID ], (err, results) => {
     if (err) {
@@ -42,14 +42,14 @@ const retrieveRatings = (locationID, callback) => {
     });
     return Math.floor(total / reviews.length * 10) / 10;
   };
-  const query = 'SELECT * FROM properties WHERE locationid = ?';
+  const query = 'SELECT accuracy, accuracy, cleanliness, communication, location, value FROM properties WHERE locationid = ?';
 
   con.query(query, [ locationID ], (err, results) => {
     if (err) {
       callback (err, null);
     } else {
       let avgAccuracy = getAverage(results, 'accuracy');
-      let avgCheckin = getAverage(results, 'checkin');
+      let avgCheckin = getAverage(results, 'accuracy');
       let avgCleanliness = getAverage(results, 'cleanliness');
       let avgCommunication = getAverage(results, 'communication');
       let avgLocation = getAverage(results, 'location');

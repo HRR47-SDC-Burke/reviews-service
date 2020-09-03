@@ -1,0 +1,23 @@
+config:
+  target: "http://127.0.0.1:3003/api"
+  processor: "./testFuncs.js"
+  phases:
+    - duration: 10
+      arrivalRate: 1
+      name: Warm up
+    - duration: 20
+      arrivalRate: 10
+      name: increase to 10RPS
+    - duration: 30
+      arrivalRate: 100
+      name: increase to 100RPS
+    - duration: 10
+      arrivalRate: 1000
+      name: increase to 1000RPS
+scenarios:
+  - name: "Get reviews"
+    flow:
+      - function: randomId
+      - get:
+          url: "/individual_reviews/{{ id }}"
+
