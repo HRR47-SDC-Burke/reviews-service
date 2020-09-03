@@ -30,3 +30,6 @@ public/bundle.js
 
 #NOTES
 /database/cassandra/cassandraNOTES.js
+
+#ENV
+.env

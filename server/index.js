@@ -1,3 +1,5 @@
+require('dotenv').config();
+require('newrelic');
 const express = require('express');
 const app = express();
 const port = 3003;
@@ -95,7 +97,7 @@ app.get('/api/cass/overall_reviews/:id', (req, res) => {
 });
 
 //MYSQL API PATHS
-app.get('/api/sql/individual_reviews/:id', (req, res) => {
+app.get('/api/individual_reviews/:id', (req, res) => {
   let id = req.params.id;
   let allReviews = [];
   dbSQL.retrieveReviews(id, (err, reviews) => {
@@ -116,7 +118,7 @@ app.get('/api/sql/individual_reviews/:id', (req, res) => {
   });
 });
 
-app.get('/api/sql/overall_reviews/:id', (req, res) => {
+app.get('/api/overall_reviews/:id', (req, res) => {
   let id = req.params.id;
   dbSQL.retrieveRatings(id, (err, ratings) => {
     if (err) {
