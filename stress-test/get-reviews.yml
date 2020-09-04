@@ -1,5 +1,5 @@
 config:
-  target: "http://127.0.0.1:3003/api"
+  target: "http://127.0.0.1:3003"
   processor: "./testFuncs.js"
   phases:
     - duration: 10
@@ -19,5 +19,7 @@ scenarios:
     flow:
       - function: randomId
       - get:
-          url: "/individual_reviews/{{ id }}"
+          url: "/api/individual_reviews/{{ id }}"
+      - get:
+          url: "/api/overall_reviews/{{ id }}"
 
