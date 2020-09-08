@@ -76,7 +76,7 @@ class Reviews extends React.Component {
   }
 
   componentDidMount() {
-    const urlID = window.location.href.split('/')[3];
+    const urlID = window.location.pathname.slice(1);
     this.fetchListingInfo(urlID);
   }
 

@@ -22,4 +22,3 @@ scenarios:
           url: "/api/individual_reviews/{{ id }}"
       - get:
           url: "/api/overall_reviews/{{ id }}"
-

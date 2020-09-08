@@ -11,7 +11,7 @@ fs.writeFileSync(__dirname + '/data.csv', columns, err => {
 });
 
 const generateReviews = (locationId) => {
-  let randomNum = faker.random.number({ 'min': 8, 'max': 11 });
+  let randomNum = faker.random.number({ 'min': 1, 'max': 3 });
   let allReviews = [];
   for (var j = 0; j < randomNum; j++) {
     let randomImgNum = faker.random.number({ 'min': 1, 'max': 1000 });
@@ -22,7 +22,7 @@ const generateReviews = (locationId) => {
       faker.name.firstName(), ',',
       randomMonth + ' ' + randomYear, ',',
       locationId, ',',
-      faker.lorem.paragraph(2), ',',
+      faker.lorem.paragraph(1), ',',
       faker.random.number({ 'min': 0, 'max': 5 }), ',',
       faker.random.number({ 'min': 0, 'max': 5 }), ',',
       faker.random.number({ 'min': 0, 'max': 5 }), ',',
