@@ -33,3 +33,7 @@ public/bundle.js
 
 #ENV
 .env
+
+#Docker
+docker-compose.yml
+Dockerfile

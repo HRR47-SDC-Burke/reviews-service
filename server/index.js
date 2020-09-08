@@ -2,7 +2,7 @@ require('dotenv').config();
 require('newrelic');
 const express = require('express');
 const app = express();
-const port = 3003;
+const port = process.env.PORT || 3003;
 const Review = require('../database/connection.js');
 const overallReviews = require('./overallReviews.js');
 const cors = require('cors');
