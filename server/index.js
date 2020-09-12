@@ -9,10 +9,17 @@ const cors = require('cors');
 const dbCass = require('../database/cassandra/index.js');
 const dbSQL = require('../database/mySQL/index.js');
 
+const CLOUD_BUNDLE = process.env.CLOUD_BUNDLE;
+if(CLOUD_BUNDLE) {
+  app.get('*/bundle.js', (req, res) => {
+    res.redirect(CLOUD_BUNDLE);
+  });
+}
 
 app.use(cors());
 
 app.use(express.json());
+app.use('/', express.static(__dirname + '/../public'));
 app.use('/:id', express.static(__dirname + '/../public'));
 
 //MONGODB CRUD PATHS
