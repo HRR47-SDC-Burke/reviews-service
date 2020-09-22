@@ -1,4 +1,4 @@
-# Reviews Module
+# Vacation Now - Reviews Module
 
 > a static module that renders mock review data, displaying a bar for each review category and featuring individual user reviews.
 
