@@ -16,7 +16,7 @@
 
 ## Usage
 
-Choose between 3 id locations to review mock data highligting the 6 most recent reviews and displaying 6 average category scores by visiting http://localhost:3000/:id. Click on the button at the bottom of the page to view all user reviews.
+Choose an id location (1-10000000) to review mock data highligting the most recent reviews and displaying the average category scores by visiting http://localhost:3000/:id. Click on the button at the bottom of the page to view all user reviews.
 
 ## Requirements
 
